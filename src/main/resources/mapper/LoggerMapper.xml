@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.project.mapper.LoggerMapper">
+
+    <insert id="insert" parameterType="org.project.entity.LoggerEntity">
+        INSERT INTO tb_logger (`user`, `method`, `params`, `operation`, `description`, `create_time`) VALUE
+            (#{user}, #{method}, #{params}, #{operation}, #{description}, NOW())
+    </insert>
+
+    <select id="getPage" parameterType="org.project.entity.condition.LoggerCondition"
+            resultType="org.project.entity.LoggerEntity">
+        SELECT * FROM tb_logger WHERE 1 = 1
+        <if test="username != null and username != ''">
+            AND `user` = #{username}
+        </if>
+        <if test="operation != null and operation != ''">
+            AND `operation` = #{operation}
+        </if>
+        <if test="startTime != null and endTime != null">
+            AND `create_time` BETWEEN #{startTime} AND #{endTime}
+        </if>
+    </select>
+
+    <delete id="deleteAll">
+        TRUNCATE TABLE tb_logger
+    </delete>
+
+</mapper>

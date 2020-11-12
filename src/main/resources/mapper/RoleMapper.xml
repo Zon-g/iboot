@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.project.mapper.RoleMapper">
+
+    <delete id="deleteOldRoles" parameterType="java.lang.Integer">
+        DELETE FROM tb_user_role WHERE `user_id` = #{id} AND `role_id` IN
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="addNewRoles" parameterType="java.lang.Integer">
+        INSERT INTO tb_user_role (`user_id`, `role_id`) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{id}, #{item})
+        </foreach>
+    </insert>
+
+    <delete id="deleteByUserId" parameterType="java.lang.Integer">
+        DELETE FROM tb_user_role WHERE `user_id` = #{id}
+    </delete>
+
+    <select id="getRoles" resultType="org.project.entity.RoleEntity">
+        SELECT * FROM tb_role
+        <if test="name != null and name != ''">
+            WHERE `name` LIKE CONCAT('%', #{name}, '%')
+        </if>
+    </select>
+
+    <select id="getRoleList" resultType="org.project.entity.RoleEntity">
+        SELECT * FROM tb_role WHERE `status` = 1
+    </select>
+
+    <insert id="insert" parameterType="org.project.entity.RoleEntity">
+        INSERT INTO tb_role (`name`, `remark`, `create_time`, `modify_time`, `status`) VALUE
+            (#{name}, #{remark}, now(), now(), #{status})
+    </insert>
+
+    <update id="update" parameterType="org.project.entity.RoleEntity">
+        UPDATE tb_role SET `name` = #{name}, `remark` = #{remark}, `modify_time` = now(), `status` = #{status}
+            WHERE `id` = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM tb_role WHERE `id` = #{id}
+    </delete>
+
+</mapper>

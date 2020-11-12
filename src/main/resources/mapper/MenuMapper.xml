@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.project.mapper.MenuMapper">
+
+    <delete id="deleteOldMenus" parameterType="java.lang.Integer">
+        DELETE FROM tb_role_menu WHERE `role_id` = #{id} AND `menu_id` IN
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByRoleId" parameterType="java.lang.Integer">
+        DELETE FROM tb_role_menu WHERE `role_id` = #{id}
+    </delete>
+
+    <insert id="addNewMenus" parameterType="java.lang.Integer">
+        INSERT INTO tb_role_menu (`role_id`, `menu_id`) VALUES
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{id}, #{item})
+        </foreach>
+    </insert>
+
+    <select id="getAll" resultType="org.project.entity.MenuEntity">
+        SELECT * FROM tb_menu
+    </select>
+
+    <select id="getMenuByRoleId" resultType="org.project.entity.MenuEntity" parameterType="int">
+        SELECT * FROM tb_menu WHERE `id` IN (
+            SELECT `menu_id` FROM tb_role_menu WHERE `role_id` = #{id}
+        )
+    </select>
+
+    <select id="getRoleMenu" resultType="java.lang.Integer" parameterType="int">
+        SELECT `menu_id` FROM tb_role_menu WHERE `role_id` = #{id}
+    </select>
+
+    <select id="getMenuByUserId" resultType="org.project.entity.MenuEntity" parameterType="int">
+        SELECT * FROM tb_menu WHERE `id` IN (
+            SELECT `menu_id` FROM tb_role_menu WHERE `role_id` IN (
+                SELECT `role_id` FROM tb_user_role WHERE `user_id` = #{id}
+        )) AND `status` = 1
+    </select>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM tb_menu WHERE `id` = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="org.project.entity.MenuEntity">
+        INSERT INTO tb_menu (`parent_id`, `menu_name`, `url`, `perms`, `icon`, `type`, `order_num`,
+            `create_time`, `modify_time`, `status`) value (#{parentId}, #{menuName}, #{url}, #{perms}, #{icon},
+            #{type}, #{orderNum}, NOW(), NOW(), #{status})
+    </insert>
+
+    <update id="update" parameterType="org.project.entity.MenuEntity">
+        UPDATE tb_menu SET `parent_id` = #{parentId}, `menu_name` = #{menuName}, `url` = #{url},
+            `perms` = #{perms}, `icon` = #{icon}, `type` = #{type}, `order_num` = #{orderNum},
+            `modify_time` = NOW(), `status` = #{status} WHERE `id` = #{id}
+    </update>
+
+</mapper>

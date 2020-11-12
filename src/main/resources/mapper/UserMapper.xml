@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.project.mapper.UserMapper">
+
+    <sql id="basic_columns">
+        u.id, u.username, u.nickname, d.name as department, u.email, u.phone,
+        u.gender, u.status, u.birth, u.create_time, u.modify_time
+    </sql>
+
+    <select id="getPage" resultType="org.project.entity.ViewObject.UserVO"
+            parameterType="org.project.entity.condition.UserCondition">
+        SELECT
+        <include refid="basic_columns"/>
+        FROM tb_user u LEFT JOIN tb_department d ON u.dept_id = d.id WHERE u.delete = 0 AND u.id > 1
+        <if test="username != null and username != ''">
+            AND u.username LIKE concat('%', #{username}, '%')
+        </if>
+        <if test="nickname != null and nickname != ''">
+            AND u.nickname LIKE concat('%', #{nickname}, '%')
+        </if>
+        <if test="email != null and email != ''">
+            AND u.email LIKE concat('%', #{email}, '%')
+        </if>
+        <if test="gender != -1">
+            AND u.gender = #{gender}
+        </if>
+        <if test="department != 0">
+            AND u.dept_id = #{department}
+        </if>
+    </select>
+
+    <select id="getRoleListById" resultType="java.lang.Integer" parameterType="int">
+        SELECT `role_id` FROM tb_user_role WHERE `user_id` = #{id}
+    </select>
+
+    <insert id="addUser" parameterType="org.project.entity.UserEntity">
+        INSERT INTO tb_user (`username`, `password`, `nickname`, `email`, `avatar`, `phone`,
+            `status`, `gender`, `type`, `birth`, `create_time`, `modify_time`, `dept_id`, `delete`) VALUE
+            (#{username}, #{password}, #{nickname}, #{email}, null, #{phone}, #{status}, #{gender},
+            1, #{birth}, now(), now(), #{deptId}, 0)
+    </insert>
+
+    <select id="getUserById" parameterType="int" resultType="org.project.entity.UserEntity">
+        SELECT * FROM tb_user WHERE id = #{id}
+    </select>
+
+    <update id="updatePwd" parameterType="org.project.entity.UserEntity">
+        UPDATE tb_user SET `password` = #{password} WHERE `id` = #{id}
+    </update>
+
+    <update id="updateUserInfo" parameterType="org.project.entity.UserEntity">
+        UPDATE tb_user
+        <set>
+            <if test="username != null and username !=''">
+                `username` = #{username},
+            </if>
+            <if test="nickname != null and nickname !=''">
+                `nickname` = #{nickname},
+            </if>
+            <if test="email != null and email !=''">
+                `email` = #{email},
+            </if>
+            <if test="avatar != null and avatar !=''">
+                `avatar` = #{avatar},
+            </if>
+            <if test="phone != null and phone !=''">
+                `phone` = #{phone},
+            </if>
+            <if test="gender != null">
+                `gender` = #{gender},
+            </if>
+            <if test="birth != null">
+                `birth` = #{birth},
+            </if>
+        </set>
+        WHERE `id` = #{id}
+    </update>
+
+    <update id="update" parameterType="org.project.entity.UserEntity">
+        UPDATE tb_user
+        <set>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="gender != null">
+                gender = #{gender},
+            </if>
+            <if test="birth != null">
+                birth = #{birth},
+            </if>
+            <if test="deptId != null">
+                dept_id = #{deptId},
+            </if>
+            <if test="true">
+                modify_time = NOW(),
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <update id="deleteUser" parameterType="int">
+        UPDATE tb_user SET `delete` = 1 WHERE id = #{id}
+    </update>
+
+    <select id="getUserByName" parameterType="String" resultType="org.project.entity.UserEntity">
+        SELECT * FROM tb_user WHERE `username` = #{username} AND `delete` = 0
+    </select>
+
+</mapper>
