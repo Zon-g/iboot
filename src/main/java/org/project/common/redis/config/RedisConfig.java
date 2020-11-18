@@ -1,4 +1,4 @@
-package org.project.common.redis;
+package org.project.common.redis.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

@@ -83,3 +83,6 @@ backup:
   port: 3306
   database: boot
 
+
+app:
+  version: 1.0.0
