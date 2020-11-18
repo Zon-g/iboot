@@ -70,6 +70,32 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 
+  application:
+    name: iboot-admin-client
+
+  boot:
+    admin:
+      client:
+        url: http://localhost:8082
+        instance:
+          service-base-url: http://localhost:8081
+          name: iboot-admin-client
+          metadata:
+            user.name: admin
+            user.password: admin
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+
 
 mybatis:
   mapper-locations: classpath*:/mapper/*Mapper.xml

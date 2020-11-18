@@ -51,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/avatar/**.jpg", "/avatar/**.png", "/avatar/**.gif",
                         "/avatar/**.jpeg", "/avatar/**.bmp", "/avatar/**.tif").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                .antMatchers("/actuator/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
