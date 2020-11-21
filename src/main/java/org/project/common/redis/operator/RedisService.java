@@ -1,7 +1,7 @@
-package org.project.common.redis.Operator;
+package org.project.common.redis.operator;
 
-import org.project.common.redis.Constant.RedisType;
-import org.project.common.redis.Entity.CacheEntity;
+import org.project.common.redis.constant.RedisType;
+import org.project.common.redis.entity.CacheEntity;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;

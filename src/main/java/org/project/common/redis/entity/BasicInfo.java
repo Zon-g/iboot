@@ -1,5 +1,7 @@
-package org.project.common.redis.Entity;
+package org.project.common.redis.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringBootVersion;
 import org.springframework.core.SpringVersion;
@@ -9,39 +11,56 @@ import java.util.Map;
 import java.util.Properties;
 
 @Component
+@ApiModel(value = "项目基本信息实体类", description = "项目运行的基本信息实体类")
 public class BasicInfo {
 
+    @ApiModelProperty(value = "Redis Monitor版本(暂时不管)", dataType = "String", example = "1.0.0")
     @Value("${app.version}")
     private String version;
 
+    @ApiModelProperty(value = "Spring 版本号", dataType = "String", example = "5.4.2.RELEASE")
     private String springVersion = SpringVersion.getVersion();
 
+    @ApiModelProperty(value = "Spring Boot 版本号", dataType = "String", example = "2.3.4.RELEASE")
     private String springBootVersion = SpringBootVersion.getVersion();
 
+    @ApiModelProperty(value = "操作系统名称", dataType = "String", example = "Windows10.0")
     private String osName;
 
+    @ApiModelProperty(value = "操作系统版本", dataType = "String", example = "10.0")
     private String osVersion;
 
+    @ApiModelProperty(value = "操作系统架构", dataType = "String", example = "amd64")
     private String osArch;
 
+    @ApiModelProperty(value = "处理器架构", dataType = "String", example = "AMD64")
     private String processorArchitecture;
 
+    @ApiModelProperty(value = "处理器内核数", dataType = "String", example = "8")
     private String numberOfProcessors;
 
+    @ApiModelProperty(value = "Java Home", dataType = "String", example = "C:/")
     private String javaHome;
 
+    @ApiModelProperty(value = "Java 版本", dataType = "String", example = "1.8.0")
     private String javaVersion;
 
+    @ApiModelProperty(value = "Java 供应商", dataType = "String", example = "Oracle")
     private String javaVendor;
 
+    @ApiModelProperty(value = "Java 供应商网址", dataType = "String", example = "https://wwww.oracle.com")
     private String javaVendorURL;
 
+    @ApiModelProperty(value = "Java 运行时环境", dataType = "String", example = "")
     private String runtimeName;
 
+    @ApiModelProperty(value = "Java 虚拟机名称", dataType = "String", example = "")
     private String vmName;
 
+    @ApiModelProperty(value = "Java 虚拟机信息", dataType = "String", example = "")
     private String vmInfo;
 
+    @ApiModelProperty(value = "ClassPath", dataType = "String[]", example = "[]")
     private String[] classpath;
 
     private BasicInfo() {

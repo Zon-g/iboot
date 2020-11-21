@@ -5,7 +5,10 @@ import org.springframework.core.annotation.AliasFor;
 import java.lang.annotation.*;
 
 /**
- * Defines am annotation for logger.
+ * Self-defined class for system log. This annotation is used in
+ * controller layer to record the operation current user does.
+ * Usually only field <code>value</code> and <code>operation</code>
+ * is required.
  *
  * @author Zon-g
  */

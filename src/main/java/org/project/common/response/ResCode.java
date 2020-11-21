@@ -13,7 +13,7 @@ public enum ResCode implements CustomizeResCode {
 
     private String message;
 
-    private ResCode(Integer code, String message) {
+    ResCode(Integer code, String message) {
         this.code = code;
         this.message = message;
     }

@@ -1,4 +1,4 @@
-package org.project.common.redis.Constant;
+package org.project.common.redis.constant;
 
 public enum RedisType {
 

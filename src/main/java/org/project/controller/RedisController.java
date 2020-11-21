@@ -2,9 +2,9 @@ package org.project.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.project.common.redis.Constant.RedisType;
-import org.project.common.redis.Entity.BasicInfo;
-import org.project.common.redis.Operator.RedisService;
+import org.project.common.redis.constant.RedisType;
+import org.project.common.redis.entity.BasicInfo;
+import org.project.common.redis.operator.RedisService;
 import org.project.common.response.Res;
 import org.project.logger.Logger;
 import org.project.logger.Operation;
