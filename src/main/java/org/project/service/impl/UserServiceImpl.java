@@ -1,6 +1,7 @@
 package org.project.service.impl;
 
 import org.project.entity.UserEntity;
+import org.project.entity.ViewObject.UserMailVO;
 import org.project.entity.ViewObject.UserVO;
 import org.project.entity.condition.UserCondition;
 import org.project.mapper.RoleMapper;
@@ -69,6 +70,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Integer> getRoleListById(int id) {
         return userMapper.getRoleListById(id);
+    }
+
+    @Override
+    public List<UserMailVO> getUserMailList() {
+        return userMapper.getUserMailList();
     }
 
 }

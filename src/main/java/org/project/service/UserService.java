@@ -1,5 +1,6 @@
 package org.project.service;
 
+import org.project.entity.ViewObject.UserMailVO;
 import org.project.entity.ViewObject.UserVO;
 import org.project.entity.condition.UserCondition;
 import org.project.entity.UserEntity;
@@ -25,5 +26,7 @@ public interface UserService {
     UserEntity getUserByName(String username);
 
     List<Integer> getRoleListById(int id);
+
+    List<UserMailVO> getUserMailList();
 
 }

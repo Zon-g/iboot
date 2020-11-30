@@ -34,6 +34,11 @@ public class FileHelper {
         return root + Folders.BackUp.name() + File.separatorChar;
     }
 
+    /* Gets the root path of attachment for Mail */
+    public static String getMailRoot() {
+        return root + Folders.Mail.name() + File.separatorChar;
+    }
+
     /**
      * Gets the all files in the specified folder and returns a list of filename.
      *

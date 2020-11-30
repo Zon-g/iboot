@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.project.mapper.MailMapper">
+
+    <select id="findPage" resultType="org.project.entity.MailEntity"
+            parameterType="org.project.entity.condition.MailCondition">
+        SELECT * FROM tb_mail WHERE 1 = 1
+        <if test="fromName != null and fromName != ''">
+            AND `fromName` = #{fromName}
+        </if>
+        <if test="toName != null and toName != ''">
+            AND `toName` = #{toName}
+        </if>
+        <if test="startTime != null and endTime != null">
+            AND `create_time` BETWEEN #{startTime} AND #{endTime}
+        </if>
+    </select>
+
+    <insert id="add" parameterType="org.project.entity.MailEntity">
+        INSERT INTO tb_mail
+        (`id`, `fromName`, `from`, `to`, `toName`, `subject`, `text`, `scheduled`, `schedule_time`, `create_time`)
+        VALUE
+        (#{id}, #{fromName}, #{from}, #{to}, #{toName}, #{subject}, #{text}, #{scheduled}, #{scheduleTime}, NOW())
+    </insert>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        DELETE FROM tb_mail WHERE `id` = #{id}
+    </delete>
+
+</mapper>

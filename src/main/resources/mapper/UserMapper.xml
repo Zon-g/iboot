@@ -123,4 +123,10 @@
         SELECT * FROM tb_user WHERE `username` = #{username} AND `delete` = 0
     </select>
 
+    <select id="getUserMailList" resultType="org.project.entity.ViewObject.UserMailVO">
+        SELECT u.nickname, u.email, d.name AS dept_name
+        FROM tb_user AS u
+        LEFT JOIN tb_department AS d ON u.dept_id = d.id;
+    </select>
+
 </mapper>

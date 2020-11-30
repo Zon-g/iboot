@@ -1,6 +1,7 @@
 package org.project.mapper;
 
 import org.project.entity.UserEntity;
+import org.project.entity.ViewObject.UserMailVO;
 import org.project.entity.ViewObject.UserVO;
 import org.project.entity.condition.UserCondition;
 import org.springframework.cache.annotation.Cacheable;
@@ -27,5 +28,7 @@ public interface UserMapper {
     UserEntity getUserByName(String username);
 
     List<Integer> getRoleListById(int id);
+
+    List<UserMailVO> getUserMailList();
 
 }

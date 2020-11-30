@@ -273,4 +273,14 @@ public class UserController {
                 .data("path", fileUploads.upload(Folders.Avatar, file));
     }
 
+    @ApiOperation(value = "获取用户昵称邮箱列表", notes = "获取用户昵称和邮箱列表并返回值前端",
+            tags = {"用户信息管理模块"}, response = Res.class, httpMethod = "GET",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/userMailList", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public Res getUserMailList() {
+        return Res.ok()
+                .data("list", userService.getUserMailList());
+    }
+
 }

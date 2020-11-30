@@ -21,6 +21,8 @@ public class StaticResourceConfig extends WebMvcConfigurationSupport {
          */
         registry.addResourceHandler("/avatar/**")
                 .addResourceLocations("file:" + FileHelper.getAvatarRoot());
+        registry.addResourceHandler("/mail/**")
+                .addResourceLocations("file:" + FileHelper.getMailRoot());
         registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**")
