@@ -50,6 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/druid/**").permitAll()
                 .antMatchers("/avatar/**.jpg", "/avatar/**.png", "/avatar/**.gif",
                         "/avatar/**.jpeg", "/avatar/**.bmp", "/avatar/**.tif").permitAll()
+                .antMatchers("/mail/**.jpg", "/mail/**.png", "/mail/**.gif",
+                        "/mail/**.jpeg", "/mail/**.bmp", "/mail/**.tif").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
                 .antMatchers("/actuator/**").permitAll()
                 .anyRequest().authenticated()
