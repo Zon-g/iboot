@@ -8,6 +8,7 @@ import org.project.entity.condition.MailCondition;
 import org.project.mapper.MailMapper;
 import org.project.service.MailService;
 import org.project.service.UserService;
+import org.quartz.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -31,11 +32,15 @@ public class MailServiceImpl implements MailService {
     @Resource
     private MailUtils mailUtils;
 
+    @Resource
+    private Scheduler scheduler;
+
     @Override
     public List<MailEntity> findPage(MailCondition condition) {
         return mailMapper.findPage(condition);
     }
 
+    @SuppressWarnings("all")
     @Override
     public int add(MailEntity entity, String... attachments) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -50,7 +55,32 @@ public class MailServiceImpl implements MailService {
             entity.setTo(tos[i]);
             entity.setToName(toNames[i]);
             cnt += mailMapper.add(entity);
-            mailUtils.send(entity, attachments);
+            if (entity.getScheduled() == 0) {
+                mailUtils.send(entity, attachments);
+            } else {
+                try {
+                    Class clazz = Class.forName("org.project.common.quartz.tast.EmailJob");
+                    JobDetail jobDetail = JobBuilder
+                            .newJob(clazz)
+                            .withIdentity("定时邮件", "定时任务")
+                            .withDescription("一封定时发送的邮件")
+                            .build();
+
+                    jobDetail.getJobDataMap().put("entity", entity);
+                    jobDetail.getJobDataMap().put("attachments", attachments);
+
+                    CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder
+                            .cronSchedule(entity.getScheduleTime());
+                    Trigger trigger = TriggerBuilder
+                            .newTrigger()
+                            .withIdentity("定时邮件触发器", "定时任务触发器")
+                            .withSchedule(cronScheduleBuilder)
+                            .build();
+                    scheduler.scheduleJob(jobDetail, trigger);
+                } catch (ClassNotFoundException | SchedulerException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return cnt;
     }
