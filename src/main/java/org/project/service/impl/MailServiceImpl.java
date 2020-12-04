@@ -59,7 +59,7 @@ public class MailServiceImpl implements MailService {
                 mailUtils.send(entity, attachments);
             } else {
                 try {
-                    Class clazz = Class.forName("org.project.common.quartz.tast.EmailJob");
+                    Class clazz = Class.forName("org.project.common.quartz.task.EmailJob");
                     JobDetail jobDetail = JobBuilder
                             .newJob(clazz)
                             .withIdentity("定时邮件", "定时任务")

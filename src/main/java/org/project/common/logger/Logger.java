@@ -1,4 +1,4 @@
-package org.project.logger;
+package org.project.common.logger;
 
 import org.springframework.core.annotation.AliasFor;
 

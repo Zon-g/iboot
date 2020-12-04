@@ -3,11 +3,11 @@ package org.project.controller;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.project.common.logger.Logger;
+import org.project.common.logger.Operation;
 import org.project.common.quartz.entity.QuartzJob;
 import org.project.common.quartz.service.JobService;
 import org.project.common.response.Res;
-import org.project.logger.Logger;
-import org.project.logger.Operation;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +29,16 @@ public class JobController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Res save(@RequestBody QuartzJob job) {
         return jobService.saveJob(job) ? Res.ok() : Res.error();
+    }
+
+    @ApiOperation(value = "获取内置定时任务", notes = "查询系统自带的所有可用定时任务并返回至前端",
+            tags = {"定时任务管理相关模块"}, response = Res.class, httpMethod = "GET",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/listJobs", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public Res listScheduledJobs() {
+        return Res.ok()
+                .data("jobs", jobService.listAllJobs());
     }
 
     @ApiOperation(value = "获取定时任务列表", notes = "根据前台的参数查询定时任务列表并返回",

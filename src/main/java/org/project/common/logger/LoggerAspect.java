@@ -1,4 +1,4 @@
-package org.project.logger;
+package org.project.common.logger;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -29,7 +29,7 @@ public class LoggerAspect {
     @Resource
     private LoggerService loggerService;
 
-    @Pointcut(value = "@annotation(org.project.logger.Logger)")
+    @Pointcut(value = "@annotation(org.project.common.logger.Logger)")
     public void loggerAspect() {
     }
 

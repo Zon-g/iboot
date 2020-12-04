@@ -1,4 +1,4 @@
-package org.project.logger;
+package org.project.common.logger;
 
 public enum Operation {
 
